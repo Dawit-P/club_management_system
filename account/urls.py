@@ -25,9 +25,11 @@ path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),nam
 path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
 
 #Member
-    path('members/', member_list, name='member_list'),
+    # path('members/', member_list, name='member_list'),
     path('members/<int:pk>/', member_detail, name='member_detail'),
     path('members/add/', member_add, name='member_add'),
     path('members/<int:pk>/edit/', member_edit, name='member_edit'),
     path('members/<int:pk>/remove/', member_remove, name='member_remove'),
+#Member_list
+    path('member_list/', MemberListView.as_view(), name='member_list'),
 ]

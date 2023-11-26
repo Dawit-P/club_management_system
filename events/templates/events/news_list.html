@@ -3,18 +3,27 @@
 
 {% block content %}
   <h2>News List</h2>
-  <ul>
-    {% for new in news %}
-      <li>
-        <h3>{{ new.title }}</h3>
-        <p>{{ new.description }}</p>
-        <p>Date: {{ new.date }}</p>
-      </li>
-    {% endfor %}
-  </ul>
+ <div class="container mt-5">
+    <div class="row">
+      {% for new in news %}
+        <div class="col-md-4 mb-4">
+          <div class="card" style="width: 100%;">
+            {% if new.image %}
+              <img class="card-img-top" src="{{ new.image.url }}" alt="{{ new.title }}">
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title">{{ new.title }}</h3>
+              <p class="card-text">{{ new.description }}</p>
+              <p class="card-text">Date: {{ new.date }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div> 
+  
 
   {% for news in page_obj %}
-  {# Each "contact" is a Contact model object. #}
   {{ news.full_name|upper }}<br>
 {% endfor %}
 

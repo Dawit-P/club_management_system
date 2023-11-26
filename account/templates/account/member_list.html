@@ -1,28 +1,23 @@
-<!-- templates/account/member_list.html -->
 {% extends "base.html" %}
+
 {% block title %}Member List{% endblock %}
+
 {% block content %}
   <h1>Member List</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Sex</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>Age</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for member in members %}
-        <tr>
-          <td>{{ member.name }}</td>
-          <td>{{ member.get_sex_display }}</td>
-          <td>{{ member.phone_number }}</td>
-          <td>{{ member.email }}</td>
-          <td>{{ member.age }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="row">
+    {% for member in members %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            {% if member.photo %}
+              <img class="card-img-top" src="{{ member.photo.url }}" alt="{{ member.name }}">
+            {% endif %}
+            <h5 class="card-title">{{ member.name }}</h5>
+            <p class="card-text">{{ member.email }}</p>
+            <p class="card-text">Age : {{ member.age }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

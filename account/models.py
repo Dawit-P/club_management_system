@@ -19,6 +19,7 @@ class Member(models.Model):
     phone_number = models.CharField(max_length=15)
     email = models.EmailField(default='')
     age = models.PositiveIntegerField()
+    photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
 
     def __str__(self):
         return self.name

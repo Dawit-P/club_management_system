@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Create an account{% endblock %}
 {% block content %}
-<h1>Create an account</h1>
-<p>Please, sign up using the following form:</p>
-<form method="post">
-{{ user_form.as_p }}
-{% csrf_token %}
-<p><input type="submit" value="Create my account"></p>
-</form>
+  <h1>Create an account</h1>
+  <p>Please sign up using the following form:</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {% if user_form.errors %}
+      <div class="alert alert-danger" role="alert">
+        <strong>Error!</strong> Please correct the following errors:
+        <ul>
+          {% for field, errors in user_form.errors.items %}
+            {% for error in errors %}
+              <li>{{ field }}: {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <p><input type="submit" value="Create my account"></p>
+  </form>
 {% endblock %}

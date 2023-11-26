@@ -6,6 +6,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Member
 from django.views.generic import ListView, DetailView
+from events.models import Event,News
+
+from .forms import UserRegistrationForm
 
 
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -35,22 +38,23 @@ def dashboard(request):
     'account/dashboard.html',
     {'section': 'dashboard'})
 
+
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
-            # Create a new user object but avoid saving it yet
-            new_user = user_form.save(commit=False)
-            # Set the chosen password
-            new_user.set_password(user_form.cleaned_data['password'])
-            # Save the User object
-            new_user.save()
+            new_user = user_form.save()
+            # Log the user in after registration
+            login(request, new_user)
             # Create the user profile
             Profile.objects.create(user=new_user)
             return render(request, 'account/register_done.html', {'new_user': new_user})
+        
     else:
         user_form = UserRegistrationForm()
     return render(request, 'account/register.html', {'user_form': user_form})
+
 
 
 
@@ -90,16 +94,53 @@ class MemberListView(ListView):
 
 @login_required
 def dashboard(request):
-    members = Profile.objects.all()
-    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'members': members})
+    members = Member.objects.all()
+    profiles = Profile.objects.all()
+    total_profiles = profiles.count()
+    total_members = members.count()
+
+    total_events = Event.objects.count()
+    total_news = News.objects.count()
+
+    # Example data for a pie chart
+    chart_data = {
+        'labels': ['Members', 'Events', 'News','Profiles'],
+        'data': [total_members, total_events, total_news,total_profiles],
+        'backgroundColor': ['#36A2EB', '#FF6384', '#FFCE56','#0529C92A'],
+    }
+    bar_chart_data = {
+        'labels': ['Members', 'Events', 'News','Profiles'],
+        'data': [total_members, total_events, total_news ,total_profiles],
+        'backgroundColor': ['#0F8A04', '#CCBF0B', '#FF5C56','#0529C92A'],
+    }
+
+    return render(
+        request,
+        'account/dashboard.html',
+        {
+            'section': 'dashboard',
+            'total_profiles':total_profiles,
+            'profile_members': members,
+            'total_members': total_members,
+            'total_events': total_events,
+            'total_news': total_news,
+            'chart_data': chart_data,
+            'bar_chart_data': bar_chart_data,
+        }
+    )
 
 #########
 
 
-@login_required
-def member_list(request):
-    members = Member.objects.all()
-    return render(request, 'account/member_list.html', {'members': members})
+
+class MemberListView(ListView):
+    model = Member
+    template_name = 'account/member_list.html'
+    context_object_name = 'members'
+    ordering = ['name']  
+    def get_queryset(self):
+        return Member.objects.all()
+
 
 @login_required
 def member_detail(request, pk):

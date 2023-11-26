@@ -4,6 +4,8 @@
 <head>
 <title>{% block title %}{% endblock %}</title>
 <link href="{% static "css/base.css" %}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
@@ -12,17 +14,22 @@
 <div id="header">
     <span class="logo">Club Management System</span>
     {% if request.user.is_authenticated %}
-    <ul class="menu">
-        <li {% if section == "dashboard" %}class="selected"{% endif %}>
-            <a href="{% url "dashboard"%}">My dashboard</a>
+    <ul class="menu nav nav-tabs">
+        <li {% if section == "dashboard" %}class="nav-item selected"{% else %}class="nav-item"{% endif %}>
+            <a class="nav-link" href="{% url "dashboard"%}">Dashboard</a>
         </li>
-        <li {% if section == "images" %}class="selected"{% endif %}>
-            <a href="#">Images</a>
+        <li {% if section == "events" %}class="nav-item selected"{% else %}class="nav-item"{% endif %}>
+            <a class="nav-link" href="{% url 'event_list' %}">Events</a>
         </li>
-        <li {% if section == "people" %}class="selected"{% endif %}>
-            <a href="#">People</a>
+        <li {% if section == "news" %}class="nav-item selected"{% else %}class="nav-item"{% endif %}>
+            <a class="nav-link" href="{% url 'news_list' %}">News</a>
+        </li>
+        <li {% if section == "members" %}class="nav-item selected"{% else %}class="nav-item"{% endif %}>
+            <a class="nav-link" href="{% url 'member_list' %}">Members</a>
         </li>
     </ul>
+    
+    
     {% endif %}
     <span class="user">
         {% if request.user.is_authenticated %}
@@ -50,5 +57,54 @@
     {% endblock %}
 
 </div>
+
+<!-- Bootstrap Footer -->
+<!-- Custom Footer -->
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">
+                    Designed and built with all the love in the world by Dawit Petros
+                </p>
+                <p class="text-muted">
+                    Email: dawitpeter@gmail.com
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h5>Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'news_list' %}">News</a></li>
+                    <li><a href="{% url 'event_list' %}">Events</a></li>
+                    <li><a href="{% url 'member_list' %}">Members</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Guides</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Resume</a></li>
+                    <!-- Add more guides as needed -->
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-muted">
+                    Code licensed MIT, docs CC BY 3.0.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p class="text-muted">
+                    <strong>Links</strong>: 
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Terms of Use</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

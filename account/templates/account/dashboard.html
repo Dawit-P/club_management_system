@@ -3,11 +3,108 @@
 {% block content %}
   <h1>Dashboard</h1>
   <p>Welcome, {{ request.user.first_name }}!</p>
-  <h2>The Club Members are {{members.count}}:</h2>
-  <ul>
-      {% for member in members %}
-          <li>Member: {{ member.user.username }} </li>
-      {% endfor %}
-  </ul>
+
+  <!-- Chart -->
+  <div class="row">
+    <!-- Pie Chart -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <canvas id="pieChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <canvas id="barChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+        <!-- Edit Card -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Edit Data</h5>
+              <p class="card-text">Click the button below for CRUD operation .</p>
+              <a href="{% url 'admin:login' %}" class="btn btn-primary">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
   
+
+  <!-- Bootstrap Cards -->
+  <div class="row mt-4">
+    <!-- Member Card -->
+    <div class="col-md-4 " >
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title ">  Total Members</h5>
+          <p class="card-text">  {{ total_members }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events Card -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Events</h5>
+          <p class="card-text">{{ total_events }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Card -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total News</h5>
+          <p class="card-text">{{ total_news }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Chart.js script
+    var pieCtx = document.getElementById('pieChart').getContext('2d');
+    var barCtx = document.getElementById('barChart').getContext('2d');
+
+    var pieChart = new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: {{ chart_data.labels|safe }},
+        datasets: [{
+          data: {{ chart_data.data|safe }},
+          backgroundColor: {{ chart_data.backgroundColor|safe }},
+        }],
+      },
+    });
+
+    var barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: {{ bar_chart_data.labels|safe }},
+        datasets: [{
+          label: 'Bar Chart Data',
+          data: {{ bar_chart_data.data|safe }},
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  </script>
 {% endblock %}

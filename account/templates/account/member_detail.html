@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Member Detail{% endblock %}
+{% block content %}
+  <h1>{{ member.name }}</h1>
+  <p>Sex: {{ member.sex }}</p>
+  <p>Phone Number: {{ member.phone_number }}</p>
+  <p>Email: {{ member.email }}</p>
+  <p>Age: {{ member.age }}</p>
+{% endblock %}

@@ -1,0 +1,15 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore the virtual environment
+venv/
+
+# Ignore database files
+db.sqlite3
+
+# Ignore media files (if you're using Django's media handling)
+media/
+
+# Ignore environment variables file (if you have one)
+.env

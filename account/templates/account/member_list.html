@@ -1,0 +1,28 @@
+<!-- templates/account/member_list.html -->
+{% extends "base.html" %}
+{% block title %}Member List{% endblock %}
+{% block content %}
+  <h1>Member List</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Sex</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for member in members %}
+        <tr>
+          <td>{{ member.name }}</td>
+          <td>{{ member.get_sex_display }}</td>
+          <td>{{ member.phone_number }}</td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.age }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

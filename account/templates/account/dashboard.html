@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <p>Welcome, {{ request.user.first_name }}!</p>
+  <h2>The Club Members are {{members.count}}:</h2>
+  <ul>
+      {% for member in members %}
+          <li>Member: {{ member.user.username }} </li>
+      {% endfor %}
+  </ul>
+  
+{% endblock %}

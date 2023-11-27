@@ -66,3 +66,11 @@ Running the Application
 Now that you have set up the project and configured the email settings, you can run the application:
 python manage.py runserver
 Visit http://localhost:8000/ in your web browser to access the Club Management System.
+for the admin login :- 
+username = admin
+password = admin
+
+
+for the member login :- 
+username = dawit_petros
+password = QWERfdsa1234

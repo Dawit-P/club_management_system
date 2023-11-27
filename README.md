@@ -6,7 +6,7 @@ The Club Management System is a Django-powered web application designed to strea
 Before you begin, ensure you have met the following requirements:
 
 - Python (version 3.x)
-- Django (version 3.x)
+- Django (version 4.x)
 - Other dependencies (listed in `requirements.txt`)
 
 ## Installation

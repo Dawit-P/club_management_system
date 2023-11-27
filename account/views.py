@@ -32,12 +32,6 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'account/login.html', {'form': form})
 
-@login_required
-def dashboard(request):
-    return render(request,
-    'account/dashboard.html',
-    {'section': 'dashboard'})
-
 
 
 def register(request):
@@ -76,19 +70,6 @@ def edit(request):
 
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
 
-
-
-class MemberListView(ListView):
-    model = Profile
-    template_name = 'account/member_list.html'
-    context_object_name = 'members'
-
-
-
-class MemberListView(ListView):
-    model = Member
-    template_name = 'account/member_list.html'
-    context_object_name = 'members'
 
 
 
@@ -176,3 +157,21 @@ def member_remove(request, pk):
     member.delete()
     return redirect('member_list')
 
+@login_required
+def member_dashboard(request):
+    user_profile = Profile.objects.get(user=request.user)
+    return render(request, 'account/member_dashboard.html', {'user_profile': user_profile})
+
+@login_required
+def edit_profile(request):
+    user_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('member_dashboard')
+    else:
+        form = ProfileEditForm(instance=user_profile)
+
+    return render(request, 'account/edit_profile.html', {'form': form})

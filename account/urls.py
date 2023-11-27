@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 from .views import *
 
+
 urlpatterns = [
 # post views
 path('login/', auth_views.LoginView.as_view(), name='login'),
@@ -32,4 +33,6 @@ path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password
     path('members/<int:pk>/remove/', member_remove, name='member_remove'),
 #Member_list
     path('member_list/', MemberListView.as_view(), name='member_list'),
+    path('member_dashboard/', member_dashboard, name='member_dashboard'),
+    path('edit_profile/', edit_profile, name='edit_profile'),
 ]

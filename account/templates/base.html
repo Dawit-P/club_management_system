@@ -34,7 +34,8 @@
     <span class="user">
         {% if request.user.is_authenticated %}
             Hello {{ request.user.first_name }},
-            <a href="{% url "logout" %}">Do you wanna Logout</a>
+            <a href="{% url 'member_dashboard' %}">My dashboard</a>
+            <h6><a href="{% url "logout" %}"> Logout</a></h6>
         {% else %}
             <a href="{% url "login" %}">Log-in</a>
         {% endif %}
@@ -82,9 +83,8 @@
             <div class="col-md-3">
                 <h5>Guides</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Resume</a></li>
-                    <!-- Add more guides as needed -->
+                    <li><a href="https://github.com/Dawit-P/club_management_system/">Contact</a></li>
+                    <li><a href="https://github.com/Dawit-P/club_management_system/">Resume</a></li>
                 </ul>
             </div>
         </div>
